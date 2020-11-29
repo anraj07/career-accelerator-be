@@ -3,28 +3,19 @@ package com.internal.careeraccelerator.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
-import com.internal.careeraccelerator.dao.UserDao;
 import com.internal.careeraccelerator.model.ProjectModel;
 import com.internal.careeraccelerator.model.TestimonialModel;
 import com.internal.careeraccelerator.model.UserModel;
-import com.internal.careeraccelerator.orm.User;
 import com.internal.careeraccelerator.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired
-	private UserDao userDaoImpl;
-
 	@Override
 	public UserModel getUserDetails(long id) {
-		List<User> users = (List<User>) userDaoImpl.findAll();
-		User user = CollectionUtils.isEmpty(users) ? null : users.get(0);
-		return convertToModel(user);
+		return getDummyUser();
 	}
 
 	private UserModel getDummyUser() {
@@ -34,20 +25,6 @@ public class UserServiceImpl implements UserService {
 		userModel.setEmail("douglas.mcgee@allianz.com");
 		userModel.setGrade("AGS7");
 		userModel.setUserName("Douglas Mc-Gee");
-		return userModel;
-	}
-
-	private UserModel convertToModel(User user) {
-		UserModel userModel = new UserModel();
-		if (null == user) {
-			userModel = getDummyUser();
-		} else {
-			userModel.setId(user.getId());
-			userModel.setDesignation(user.getDesignation());
-			userModel.setEmail(user.getEmail());
-			userModel.setGrade(user.getGrade());
-			userModel.setUserName(user.getName());
-		}
 		List<ProjectModel> projectDetails = new ArrayList<>();
 		ProjectModel project1 = new ProjectModel();
 		project1.setId(122);
